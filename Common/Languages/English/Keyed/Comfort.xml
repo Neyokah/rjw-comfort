@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<Comfort_FallbackUnits>Units gathered when the partner produces no measurable semen: {0}</Comfort_FallbackUnits>
+	<Comfort_UnitsBeforeExtraction>Units stored before an extraction trip: {0}</Comfort_UnitsBeforeExtraction>
+</LanguageData>

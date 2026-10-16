@@ -1,0 +1,8 @@
+Game: Assembly-CSharp, Version=1.7.9784.3272, Culture=neutral, PublicKeyToken=null
+RJW: RJW, Version=1.6.9730.20937, Culture=neutral, PublicKeyToken=null
+All production Harmony targets installed successfully.
+Actual Scribe session round-trip and legacy-format migration passed.
+Optional Cumpilation definition integration and zero/fallback distinction passed.
+Candidate cache workload: 100 workers x 600 ticks, 500 pawns: 60,000 reads, 5 population passes / 2,500 filters, 4.01 ms. Synthetic lookup workload, not a TPS claim. Checksum 9960000.
+Actual legacy search vs rewrite, controlled no-target fixture (100 workers, 600 ticks, 500 pawns): 30,000,000 vs 2,500 eligibility checks; 429.14 ms vs 2.24 ms. Low-level eligibility is stubbed equally; this measures search overhead, not colony TPS.
+PASS 21547 checks under the installed RimWorld compatibility runtime.

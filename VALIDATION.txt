@@ -1,0 +1,44 @@
+RJW Comfort 1.1.0 validation
+2026-10-15
+
+Environment
+RimWorld: 1.7.4979 rev109; Assembly-CSharp 1.7.9784.3272
+RJW: installed version 6.2.1; assembly 1.6.9730.20937
+Runtime: the game's bundled .NET 10 compatibility runtime on this Mac
+Optional integration: installed Cumpilation assembly and its gathering schema
+
+Result: 21,547 checks passed; production assembly builds without errors/warnings.
+
+Coverage
+- All production Harmony patch targets install against the actual RJW assembly.
+- Adult eligibility boundaries, invalid numeric settings and resource arithmetic.
+- 10,000 randomized partial-placement accounting cases, callback clamping,
+  fractional balance retention and placement followed by exception.
+- Exact queued/current native job matching, queue removal and queue timeout.
+- Native job lifecycle callback attachment and interrupted-driver cleanup.
+- Completion scope, repeated callbacks, exceptions, unrelated nested events and
+  another patch skipping the original method.
+- Actual Scribe save/load round-trip, legacy-format migration, loaded-driver
+  rebinding and protection against an old callback canceling a newer session.
+- Optional Cumpilation definition lookup, nondefault conversion ratios, standalone
+  fallback and the distinction between measured zero and unavailable measurement.
+- Lazy map-cache interval, population changes and clock rewind invalidation.
+- Compiled extraction callback wiring and absence of population searches from
+  the extraction job's per-tick failure check.
+
+Search benchmark
+Controlled no-target fixture: 100 workers, 600 ticks, 500 pawns.
+Original 1.0 DLL: 30,000,000 eligibility checks.
+Rewritten implementation: 2,500 eligibility checks.
+Observed timings are recorded in test-results.txt. Low-level eligibility is
+stubbed equally for both implementations. This measures isolated search cost,
+not full eligibility cost, overall frame time or colony TPS.
+
+Limits
+The suite exercises real game/RJW types and installed Harmony targets using
+controlled fixtures. The native completion body is replaced by a fixture while
+testing Comfort's production hooks; this is not a simulated full colony.
+Resource tests include controlled placement callbacks and compiled-call checks;
+they do not exercise every real map/storage layout. No live colony soak test,
+full installed-mod interaction test, multiplayer sync test or TPS measurement
+was performed. Gameplay validation remains necessary for those claims.

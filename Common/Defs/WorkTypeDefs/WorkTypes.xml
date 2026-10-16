@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<WorkTypeDef>
+		<defName>Comfort</defName>
+		<labelShort>Comfort</labelShort>
+		<pawnLabel>Comforter</pawnLabel>
+		<gerundLabel>comforting</gerundLabel>
+		<description>Relieve colonists, slaves, and prisoners whose sex need is running high, then extract any semen gathered from that work.</description>
+		<verb>Comfort</verb>
+		<naturalPriority>1050</naturalPriority>
+		<requireCapableColonist>true</requireCapableColonist>
+		<relevantSkills>
+			<li>Social</li>
+		</relevantSkills>
+		<workTags>
+			<li>Social</li>
+		</workTags>
+	</WorkTypeDef>
+</Defs>

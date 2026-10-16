@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<ThingDef ParentName="ResourceBase">
+		<defName>Comfort_GatheredCum</defName>
+		<label>gathered cum</label>
+		<description>Semen extracted after Comfort. Used when Cumpilation is not installed.</description>
+		<graphicData>
+			<texPath>Things/Item/Resource/Milk</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<stackLimit>75</stackLimit>
+		<socialPropernessMatters>true</socialPropernessMatters>
+		<thingCategories>
+			<li>ResourcesRaw</li>
+		</thingCategories>
+		<statBases>
+			<MarketValue>0.5</MarketValue>
+			<Mass>0.05</Mass>
+			<Flammability>0.2</Flammability>
+			<DeteriorationRate>4</DeteriorationRate>
+		</statBases>
+	</ThingDef>
+</Defs>

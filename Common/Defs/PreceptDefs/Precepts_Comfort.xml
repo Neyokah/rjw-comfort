@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<IssueDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>Comfort</defName>
+		<label>comfort</label>
+		<iconPath>UI/Issues/PhysicalLove</iconPath>
+	</IssueDef>
+
+	<PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>Comfort_Accepted</defName>
+		<issue>Comfort</issue>
+		<label>accepted</label>
+		<description>Comfort is ordinary work. Relieving someone does not count as cheating.</description>
+		<defaultSelectionWeight>1</defaultSelectionWeight>
+		<impact>Low</impact>
+		<displayOrderInIssue>0</displayOrderInIssue>
+	</PreceptDef>
+
+	<PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>Comfort_Encouraged</defName>
+		<issue>Comfort</issue>
+		<label>encouraged</label>
+		<description>Comfort is good and proper. People who give it, and people who receive it, should feel proud.</description>
+		<defaultSelectionWeight>0</defaultSelectionWeight>
+		<impact>Medium</impact>
+		<displayOrderInIssue>10</displayOrderInIssue>
+	</PreceptDef>
+
+	<PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+		<defName>Comfort_Cheating</defName>
+		<issue>Comfort</issue>
+		<label>counts as cheating</label>
+		<description>Comfort outside a marriage is infidelity. Spouses are betrayed, and spouse-only rules apply.</description>
+		<defaultSelectionWeight>0</defaultSelectionWeight>
+		<impact>Medium</impact>
+		<displayOrderInIssue>20</displayOrderInIssue>
+	</PreceptDef>
+</Defs>

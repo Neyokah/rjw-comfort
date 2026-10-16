@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<ThoughtDef>
+		<defName>Comfort_Provided</defName>
+		<durationDays>1</durationDays>
+		<stackLimit>3</stackLimit>
+		<stackedEffectMultiplier>0.7</stackedEffectMultiplier>
+		<developmentalStageFilter>Adult</developmentalStageFilter>
+		<stages>
+			<li>
+				<label>provided comfort</label>
+				<description>I took care of someone who needed it. That is the job.</description>
+				<baseMoodEffect>3</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Comfort_ProvidedEncouraged</defName>
+		<durationDays>1</durationDays>
+		<stackLimit>3</stackLimit>
+		<stackedEffectMultiplier>0.7</stackedEffectMultiplier>
+		<developmentalStageFilter>Adult</developmentalStageFilter>
+		<stages>
+			<li>
+				<label>comfort was honored</label>
+				<description>The colony is right to honor this. I did good work.</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Comfort_Received</defName>
+		<durationDays>1</durationDays>
+		<stackLimit>3</stackLimit>
+		<stackedEffectMultiplier>0.7</stackedEffectMultiplier>
+		<developmentalStageFilter>Adult</developmentalStageFilter>
+		<stages>
+			<li>
+				<label>was comforted</label>
+				<description>Someone on Comfort duty took the edge off. I feel lighter.</description>
+				<baseMoodEffect>4</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Comfort_ReceivedEncouraged</defName>
+		<durationDays>1</durationDays>
+		<stackLimit>3</stackLimit>
+		<stackedEffectMultiplier>0.7</stackedEffectMultiplier>
+		<developmentalStageFilter>Adult</developmentalStageFilter>
+		<stages>
+			<li>
+				<label>comfort was a kindness</label>
+				<description>Being relieved like that is something this colony is proud of.</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

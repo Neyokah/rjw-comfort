@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<JobDef>
+		<defName>ComfortRelieve</defName>
+		<driverClass>ComfortDuty.JobDriver_ComfortRelieve</driverClass>
+		<reportString>comforting TargetA.</reportString>
+		<casualInterruptible>false</casualInterruptible>
+	</JobDef>
+
+	<JobDef>
+		<defName>ComfortExtract</defName>
+		<driverClass>ComfortDuty.JobDriver_ComfortExtract</driverClass>
+		<reportString>extracting gathered cum.</reportString>
+		<casualInterruptible>true</casualInterruptible>
+	</JobDef>
+</Defs>

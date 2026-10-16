@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<WorkGiverDef>
+		<defName>ComfortRelieve</defName>
+		<label>relieve sex need</label>
+		<giverClass>ComfortDuty.WorkGiver_ComfortRelieve</giverClass>
+		<workType>Comfort</workType>
+		<verb>comfort</verb>
+		<gerund>comforting</gerund>
+		<priorityInType>100</priorityInType>
+		<requiredCapacities>
+			<li>Moving</li>
+			<li>Manipulation</li>
+		</requiredCapacities>
+	</WorkGiverDef>
+
+	<WorkGiverDef>
+		<defName>ComfortExtract</defName>
+		<label>extract gathered cum</label>
+		<giverClass>ComfortDuty.WorkGiver_ComfortExtract</giverClass>
+		<workType>Comfort</workType>
+		<verb>extract gathered cum</verb>
+		<gerund>extracting gathered cum</gerund>
+		<priorityInType>10</priorityInType>
+		<scanCells>true</scanCells>
+		<scanThings>false</scanThings>
+		<requiredCapacities>
+			<li>Moving</li>
+			<li>Manipulation</li>
+		</requiredCapacities>
+	</WorkGiverDef>
+</Defs>
