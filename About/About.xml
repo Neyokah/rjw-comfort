@@ -3,7 +3,7 @@
   <name>RJW Comfort</name>
   <author>umrae</author>
   <packageId>umrae.rjw.comfort</packageId>
-  <modVersion>1.1.0</modVersion>
+  <modVersion>1.2.0</modVersion>
   <supportedVersions>
     <li>1.7</li>
   </supportedVersions>
@@ -22,5 +22,5 @@
     <li>rim.job.world</li>
     <li>vegapnk.cumpilation</li>
   </loadAfter>
-  <description>Adds a Comfort work type using native RJW jobs, eligibility checks, preferences and completion hooks. Includes adult-only eligibility, ideology-based treatment, resource collection and optional reuse of Cumpilation resource/conversion definitions. Version 1.1.0 shares lazy map searches, tracks exact jobs, cleans up interrupted sessions and accounts for partial resource placement.</description>
+  <description>Adds a Comfort work type using native RJW jobs, eligibility checks, preferences and completion hooks. Includes adult-only eligibility, ideology-based treatment, resource collection and optional reuse of Cumpilation resource/conversion definitions. Includes a cancellable 24-hour Submit toggle. Shares lazy map searches, tracks exact jobs, cleans up interrupted sessions and accounts for partial resource placement.</description>
 </ModMetaData>

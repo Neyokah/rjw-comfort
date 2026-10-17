@@ -1,9 +1,18 @@
-RJW Comfort 1.1.0
+RJW Comfort 1.2.0
 Package: umrae.rjw.comfort
 
 This replacement targets the installed RimWorld 1.7 runtime. It requires Harmony
 and RimJobWorld. Cumpilation is optional. Load it after RJW and, when installed,
 Cumpilation. Keep only one copy of RJW Comfort enabled.
+
+Submit toggle (1.2.0)
+Enable the Submit button in RJW settings and select a drafted eligible adult colonist.
+Submit (24h) starts one in-game day (60,000 ticks). Click End submission to stop early.
+The cancellation button remains available after undrafting. Remaining time is saved
+by RJW's normal disappearing hediff component and pauses when the game is paused.
+Other sources of submission keep their original durations. RJW's existing health
+and removal rules still apply, including same-faction carrying. Already-active
+states keep their timer; cancel and reactivate to start a new full day.
 
 Reuse of installed mods
 - Uses RJW's native quick job, eligibility checks, orientation/anatomy preference

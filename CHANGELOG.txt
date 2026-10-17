@@ -1,3 +1,10 @@
+1.2.0 — 2026-10-17
+- Converted the native player Submit action to a 24-hour toggle with immediate early cancellation.
+- Kept cancellation visible after undrafting without duplicating the native button.
+- Added explicit active/inactive labels and adult activation guard.
+- Used RJW's existing synchronized entry point and native saved timer; other submission sources retain their original durations.
+- Added integration fixtures for timer expiry, serialization, toggle actions, and cancellation controls.
+
 1.1.0
 - Replaced repeated map searches with a shared lazy snapshot and worker caches.
 - Reused native RJW job, preference, eligibility and completion facilities.

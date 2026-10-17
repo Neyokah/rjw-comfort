@@ -2,4 +2,9 @@
 <LanguageData>
 	<Comfort_FallbackUnits>Units gathered when the partner produces no measurable semen: {0}</Comfort_FallbackUnits>
 	<Comfort_UnitsBeforeExtraction>Units stored before an extraction trip: {0}</Comfort_UnitsBeforeExtraction>
+  <Comfort_SubmitDay>Submit (24h)</Comfort_SubmitDay>
+  <Comfort_SubmitDayDesc>Submit for one in-game day (24 hours). Click End submission to stop early. RJW's normal health and carrying rules still apply.</Comfort_SubmitDayDesc>
+  <Comfort_EndSubmission>End submission</Comfort_EndSubmission>
+  <Comfort_EndSubmissionDesc>End this pawn's submission immediately.</Comfort_EndSubmissionDesc>
+  <Comfort_SubmitAdultOnly>Requires a humanlike adult aged 18 or older.</Comfort_SubmitAdultOnly>
 </LanguageData>

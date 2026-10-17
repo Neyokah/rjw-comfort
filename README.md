@@ -1,11 +1,12 @@
 # RJW Comfort
 
-**Version 1.1.0 · RimWorld 1.7 · Package ID `umrae.rjw.comfort`**
+**Version 1.2.0 · RimWorld 1.7 · Package ID `umrae.rjw.comfort`**
 
 An adult-only Comfort work system built around RJW's native jobs, eligibility checks, mutual preferences, and completion events. It also collects the supported resource output and provides optional ideology and Cumpilation integration.
 
 ## Features
 
+- A **Submit (24h)** toggle for eligible adult pawns. Click it again as **End submission** to cancel immediately. The cancellation button remains available after undrafting.
 - A **Comfort** work type with need-relief work and lower-priority collection work. Enable it in the Work tab for suitable pawns.
 - Eligibility requires humanlike adult pawns, biological age **18 or older**, the adult RJW age category, and an adult developmental stage. Native RJW eligibility, mutual preference, job availability, and reservation rules still apply.
 - Ideology support offers **accepted**, **encouraged**, or **counts as cheating** treatment for Comfort work. The definitions are conditional on Ideology.
@@ -36,6 +37,12 @@ For Steam, **Manage → Browse local files** opens the game installation. On mac
 
 Load after Harmony, RJW, and Cumpilation if installed. No blanket support claim is made for every race, body model, or RJW add-on.
 
+## Submit toggle
+
+Enable RJW's Submit button in RJW settings, then select and draft an eligible colonist. **Submit (24h)** applies RJW's native submission state for **60,000 game ticks**, one in-game day. The button becomes **End submission**; click it to cancel early. Cancellation stays available while active even after undrafting. The timer pauses with the game and its remaining time survives saving/loading.
+
+New activation requires Comfort's adult eligibility. This only changes the player's Submit action; other sources keep RJW's original duration, and RJW's normal health/removal rules still apply (including removal when carried by a same-faction pawn). Already active submission states retain their current timers after updating; cancel and reactivate to start a full day. No new saved timer or global submission definition is added. Multiplayer uses the existing RJW synchronized action entry point, but has not been tested in a multiplayer session.
+
 ## Settings
 
 Open **Options → Mod settings → RJW Comfort**.
@@ -53,7 +60,7 @@ Legacy 1.0 session markers lack a native-job identity and are discarded during l
 
 ## Verification status
 
-The original controlled integration run recorded **21,547 checks**. Coverage includes adult eligibility, native patch targets, partial placement, interruption cleanup, scoped completion handling, and actual Scribe round trips. Its isolated search benchmark is not a full gameplay or TPS measurement. See `VALIDATION.txt` for fixture limits. Multiplayer synchronization and full-colony play have not been certified.
+The 1.2.0 controlled integration run recorded **21,563 checks** on the installed 1.7.4980 runtime. Coverage includes adult eligibility, native patch targets, partial placement, interruption cleanup, scoped completion handling, and actual Scribe round trips. Coverage also includes the native Submit action, early cancellation, button visibility, 24-hour expiry, and native timer serialization. Its isolated search benchmark is not a full gameplay or TPS measurement. See `VALIDATION.txt` for fixture limits. Multiplayer synchronization and full-colony play have not been certified.
 
 ## Source, testing, and support
 

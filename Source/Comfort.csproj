@@ -4,7 +4,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <AssemblyName>Comfort</AssemblyName>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <RootNamespace>ComfortDuty</RootNamespace>
     <OutputPath>../1.7/Assemblies/</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>

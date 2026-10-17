@@ -33,6 +33,8 @@ Fluids and Solids additionally references Dubs Bad Hygiene, its Multiplayer API,
 
 Tests/Comfort.Tests.csproj requires Mono.Cecil via MONO_CECIL_DLL and Cumpilation via CUMPILATION_DLL. The optional old-version search benchmark runs only when COMFORT_LEGACY_DLL points to your own original 1.0 DLL. That old binary is not bundled.
 
-The RJW suites were originally run under the game's bundled compatibility runtime. When using that runtime, copy the test output to a temporary directory and use the installed RimWorld runtime configuration/dependency mapping, as illustrated by Fluids and Solids' test runner. Stock .NET may not provide the game's legacy assembly redirects. Do not copy proprietary game/dependency assemblies into this repository.
+After setting the required paths, run `python3 Tests/run_tests.py` to build the tests and run them in an isolated temporary copy of the installed Mac compatibility runtime. It also checks that the packaged DLL matches the tested source build. Map/health notifications and baseline fixture eligibility are controlled; no saves or game configuration are opened.
+
+The RJW suites were originally run under the game's bundled compatibility runtime. When using that runtime, copy the test output to a temporary directory and use the installed RimWorld runtime configuration/dependency mapping, as done by the included test runner. Stock .NET may not provide the game's legacy assembly redirects. Do not copy proprietary game/dependency assemblies into this repository.
 
 The packaged verification files describe historical integration results, including fixture substitutions and remaining interactive checks. Preparing these repositories does not turn those fixtures into a full live-colony test. If dependencies or gameplay code change, rebuild, rerun the relevant suite and perform a disposable-colony smoke test before publishing a release.

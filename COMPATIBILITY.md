@@ -8,6 +8,10 @@ RimWorld **1.7**, targeting its .NET 10 runtime. The source/binaries were prepar
 
 Cumpilation support reads matching gathering definitions, their output item, and conversion ratio. Without one, standalone collection remains available. Ideology definitions are conditional and not a hard dependency. Native RJW events remain native; changing a dependency's event/job signatures can require a new adapter. Multiplayer, every race, and every body/animation pack are not certified. The separate Stack Compatibility mod solves different issues.
 
+## Submission integration (1.2.0)
+
+Patches the installed RJW `SubmitGizmo` constructor and `LayDownAndAccept(Pawn)` action. Uses the native `Hediff_Submitting` and its disappearing component. Mods replacing those signatures, removing that component, or independently changing the same button may need an adapter. Native carrying/health removal remains in effect; this mod does not globally extend NPC or other scripted submission. The existing synchronized action is retained; multiplayer is not certified.
+
 ## Load-order hints from the shipped metadata
 
 The following are placement hints, **not a list of required dependencies or a blanket compatibility guarantee**. Required dependencies are separately listed in README.md and About/About.xml.

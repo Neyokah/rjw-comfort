@@ -149,11 +149,79 @@ internal static class Program
         Fakes.Current.Cancel(pair); var newer = Activate(a, c, 702); Fakes.Current.Cancel(pair);
         Check(Fakes.Current.FindForJob(a, newer) != null, "late old cleanup cannot remove new session");
 
+        TestSubmissionToggle(h);
         TestSaveRoundTrip(a, c);
         TestOptionalResourceDefinitions(h);
         TestMapCache(h);
         TestLegacySearchComparison(h);
         TestCompiledContract();
+    }
+
+    static void TestSubmissionToggle(Harmony h)
+    {
+        var def = new HediffDef {
+            defName = "Hediff_Submitting", hediffClass = typeof(Hediff_Submitting),
+            comps = new List<HediffCompProperties> {
+                new HediffCompProperties_Disappears { disappearsAfterTicks = new IntRange(2500, 5000) }
+            }
+        };
+        RJWHediffDefOf.Submitting = def;
+        DefDatabase<HediffDef>.Add(def);
+        h.Patch(AccessTools.PropertyGetter(typeof(Find), nameof(Find.UniqueIDsManager)), prefix: new HarmonyMethod(typeof(Fakes), nameof(Fakes.UniqueIds)));
+        h.Patch(AccessTools.Method(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.AddHediff), new[] { typeof(Hediff), typeof(BodyPartRecord), typeof(DamageInfo?), typeof(DamageWorker.DamageResult) }), prefix: new HarmonyMethod(typeof(Fakes), nameof(Fakes.AddSubmission)));
+        h.Patch(AccessTools.Method(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.RemoveHediff)), prefix: new HarmonyMethod(typeof(Fakes), nameof(Fakes.RemoveSubmission)));
+        var pawn = MakePawn(890); pawn.def.race = new RaceProperties { intelligence = Intelligence.Humanlike }; pawn.health = new Pawn_HealthTracker(pawn);
+        // Invoke the actual native sync entry point with the production prefix installed.
+        var action = AccessTools.Method(typeof(SubmitGizmo), "LayDownAndAccept");
+        action.Invoke(null, new object[] { pawn });
+        var hed = pawn.health.hediffSet.GetFirstHediffOfDef(def);
+        var timer = hed.TryGetComp<HediffComp_Disappears>();
+        Check(timer != null && timer.ticksToDisappear == 60000 && timer.disappearsAfterTicks == 60000, "native Submit action starts exactly 24 in-game hours");
+        Check(def.comps.OfType<HediffCompProperties_Disappears>().Single().disappearsAfterTicks == new IntRange(2500, 5000), "native definition duration remains unchanged for other sources");
+        float severity = 0;
+        for (int i = 0; i < 12345; i++) timer.CompPostTick(ref severity);
+        Check(timer.ticksToDisappear == 47655 && !timer.CompShouldRemove, "timer counts game ticks, not real-time seconds");
+        string file = Path.Combine(Path.GetTempPath(), "Comfort-submit-" + Guid.NewGuid() + ".xml");
+        Scribe.saver.InitSaving(file, "SubmissionTimerTest");
+        timer.CompExposeData(); Scribe.saver.FinalizeSaving();
+        var restored = new HediffComp_Disappears { parent = (HediffWithComps)hed, props = timer.props };
+        Scribe.loader.InitLoading(file); restored.CompExposeData(); Scribe.loader.FinalizeLoading(); File.Delete(file);
+        Check(restored.ticksToDisappear == 47655 && restored.disappearsAfterTicks == 60000, "native Scribe keeps remaining submission duration");
+        for (int i = 0; i < 47654; i++) restored.CompPostTick(ref severity);
+        Check(!restored.CompShouldRemove && restored.ticksToDisappear == 1, "submission remains active through the last tick");
+        restored.CompPostTick(ref severity);
+        Check(restored.CompShouldRemove && restored.ticksToDisappear == 0, "native timer expires after exactly one day");
+        action.Invoke(null, new object[] { pawn });
+        Check(!SubmissionToggle.IsActive(pawn), "second native action cancels instead of extending");
+        action.Invoke(null, new object[] { pawn });
+        Check(SubmissionToggle.IsActive(pawn) && pawn.health.hediffSet.hediffs.Count == 1, "re-enabling starts a fresh single submission");
+        pawn.health.hediffSet.hediffs.Add(HediffMaker.MakeHediff(def, pawn));
+        Fakes.NotAdult = pawn;
+        action.Invoke(null, new object[] { pawn });
+        Check(!SubmissionToggle.IsActive(pawn) && pawn.health.hediffSet.hediffs.Count == 0, "cancel removes duplicate states even when adult eligibility changes");
+        action.Invoke(null, new object[] { pawn });
+        Check(!SubmissionToggle.IsActive(pawn), "new activation refuses ineligible pawn");
+        Fakes.NotAdult = null;
+        h.Patch(AccessTools.PropertyGetter(typeof(Pawn), nameof(Pawn.IsColonist)), prefix: new HarmonyMethod(typeof(Fakes), nameof(Fakes.Colonist)));
+        var inactive = new SubmitGizmo(pawn);
+        Check(inactive.defaultLabel == "Comfort_SubmitDay".Translate() && !inactive.Disabled, "inactive native button advertises a 24-hour activation");
+        inactive.action();
+        var other = new Command_Action();
+        var gizmos = Patch_SubmissionCancellation.WithCancellation(pawn, new Gizmo[] { other }).ToList();
+        var cancel = gizmos.OfType<SubmitGizmo>().Single();
+        Check(gizmos.Count == 2 && gizmos[0] == other && cancel.defaultLabel == "Comfort_EndSubmission".Translate(), "undrafted active pawn gains an accurately labeled cancellation button");
+        Check(Patch_SubmissionCancellation.WithCancellation(pawn, gizmos).OfType<SubmitGizmo>().Count() == 1, "native and fallback controls never duplicate");
+        cancel.action();
+        Check(!SubmissionToggle.IsActive(pawn), "fallback cancellation uses the same native synchronized action");
+        Check(Patch_SubmissionCancellation.WithCancellation(pawn, new Gizmo[] { other }).SequenceEqual(new Gizmo[] { other }), "inactive undrafted pawn gains no extra button");
+        Fakes.NotAdult = pawn;
+        Check(new SubmitGizmo(pawn).Disabled, "activation button is visibly disabled for an ineligible pawn");
+        Fakes.NotAdult = null;
+        Console.WriteLine("Submit: native action toggle, 24-hour expiry, cancellation visibility, adult guard and saved timer passed.");
+        SubmissionToggle.Toggle(null);
+        Check(!SubmissionToggle.IsActive(null), "null pawn is safe");
+        h.Unpatch(AccessTools.Method(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.AddHediff), new[] { typeof(Hediff), typeof(BodyPartRecord), typeof(DamageInfo?), typeof(DamageWorker.DamageResult) }), AccessTools.Method(typeof(Fakes), nameof(Fakes.AddSubmission)));
+        h.Unpatch(AccessTools.Method(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.RemoveHediff)), AccessTools.Method(typeof(Fakes), nameof(Fakes.RemoveSubmission)));
     }
 
     static void NewSession() { Fakes.Current = new ComfortSession(null); }
@@ -291,6 +359,12 @@ internal static class Program
 
 internal static class Fakes
 {
+    internal static readonly UniqueIDsManager IdManager = new();
+    internal static Pawn NotAdult;
+    internal static bool Colonist(Pawn __instance, ref bool __result) { if (!Pawns.Contains(__instance)) return true; __result = true; return false; }
+    internal static bool UniqueIds(ref UniqueIDsManager __result) { __result = IdManager; return false; }
+    internal static bool AddSubmission(Pawn_HealthTracker __instance, Hediff hediff) { __instance.hediffSet.hediffs.Add(hediff); return false; }
+    internal static bool RemoveSubmission(Pawn_HealthTracker __instance, Hediff hediff) { __instance.hediffSet.hediffs.Remove(hediff); return false; }
     internal static ComfortSession Current;
     internal static TickManager Manager;
     internal static Map FixtureMap = (Map)RuntimeHelpers.GetUninitializedObject(typeof(Map));
@@ -306,7 +380,7 @@ internal static class Fakes
     internal static bool Spawned(Thing __instance, ref bool __result) { if (__instance is not Pawn p || !Pawns.Contains(p)) return true; __result = true; return false; }
     internal static bool Map(Thing __instance, ref Map __result) { if (__instance is not Pawn p || !Pawns.Contains(p)) return true; __result = FixtureMap; return false; }
     internal static bool Dead(Pawn __instance, ref bool __result) { if (!Pawns.Contains(__instance)) return true; __result = false; return false; }
-    internal static bool Adult(Pawn pawn, ref bool __result) { if (!Pawns.Contains(pawn)) return true; __result = true; return false; }
+    internal static bool Adult(Pawn pawn, ref bool __result) { if (!Pawns.Contains(pawn)) return true; __result = pawn != NotAdult; return false; }
     internal static bool Rewards() { RewardCalls++; return false; }
     internal static bool Cheating(ref bool __result) { __result = false; return false; }
     internal static bool Target(Pawn pawn, ref bool __result) { TargetChecks++; __result = !NoEligible && pawn.thingIDNumber % 3 == 0; return false; }

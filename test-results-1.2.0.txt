@@ -1,0 +1,21 @@
+rjw-comfort 1.2.0 — verification update (2026-10-17 Pacific/Guam)
+Game: RimWorld 1.7.4980 rev60; Assembly-CSharp 1.7.9785.1822
+Runtime: installed Mac .NET 10 compatibility runtime; RJW 1.6.9730.20937
+Production and test builds: zero warnings and errors.
+Packaged DLL exactly matches the tested source build.
+PASS: 21,563 checks.
+- All production Harmony targets install against the actual RJW assembly.
+- Native Submit action starts exactly 60,000 ticks; second activation cancels.
+- Re-activation creates one fresh state; cancellation removes duplicate states.
+- Actual disappearing component ticks and expires after one day.
+- Native component Scribe serialization preserves 47,655 remaining ticks.
+- Active cancellation remains visible after undrafting and does not duplicate
+  the original control. The fallback uses the same native action.
+- Ineligible activation is disabled/refused; cancellation remains possible.
+- Existing native submission definition duration is unchanged.
+- Existing session, resource accounting, caching and optional integrations pass.
+The optional historical legacy-search benchmark was skipped (no legacy DLL set).
+Health add/remove notifications and baseline eligibility are controlled fixtures;
+the native Submit action, constructor, disappearing timer and Scribe are real.
+No live colony, full mod-stack gameplay, or multiplayer session was tested.
+
